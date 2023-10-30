@@ -92,7 +92,11 @@ class HomePageState extends State<HomePage> {
                               }
                             }(),
                           ),
-                          title: Text(request.realUri.toString()),
+                          title: Text(request.url.toString()),
+                          subtitle: Text(
+                            'RESULT: ${request.realUri.toString()}',
+                            style: const TextStyle(fontSize: 10),
+                          ),
                           trailing: Text(request.createdAt.toIso8601String()),
                         ),
                       ),

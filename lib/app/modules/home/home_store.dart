@@ -27,10 +27,12 @@ abstract class HomeStoreBase with Store {
           validateStatus: (status) => status! < 505,
         )).get(url);
 
-        requestList.add(CustomResponse.fromResponse(result, DateTime.now()));
+        requestList
+            .add(CustomResponse.fromResponse(result, url, DateTime.now()));
       } catch (e) {
         requestList.add(
           CustomResponse(
+              url: url,
               requestOptions: RequestOptions(baseUrl: url),
               createdAt: DateTime.now(),
               statusCode: 500,
@@ -67,6 +69,7 @@ class HomeError extends IHomeState {
 }
 
 class CustomResponse extends Response {
+  final String url;
   final DateTime createdAt;
 
   CustomResponse({
@@ -78,10 +81,12 @@ class CustomResponse extends Response {
     super.redirects,
     super.extra,
     super.headers,
+    required this.url,
     required this.createdAt,
   });
 
-  factory CustomResponse.fromResponse(Response response, DateTime createdAt) {
+  factory CustomResponse.fromResponse(
+      Response response, String url, DateTime createdAt) {
     return CustomResponse(
       data: response.data,
       requestOptions: response.requestOptions,
@@ -91,6 +96,7 @@ class CustomResponse extends Response {
       redirects: response.redirects,
       extra: response.extra,
       headers: response.headers,
+      url: url,
       createdAt: createdAt,
     );
   }
