@@ -1,0 +1,6 @@
+slidy: '1'
+variables:
+  customMessage: "Complete"  
+
+scripts:
+  runner: flutter pub run build_runner watch --delete-conflicting-outputs
